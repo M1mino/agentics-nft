@@ -16,6 +16,7 @@ contract NftCollection {
     mint_price: Int;
     max_supply: Int;
     mint_start_time: Int;  // 0 = mint not started, >0 = unix timestamp of start
+    rarity_map: map<Int, RarityInfo>;  // item_index → rarity tier
 
     init(owner_address: Address, collection_content: Cell, royalty_params: RoyaltyParams){
         self.owner_address = owner_address;
@@ -81,6 +82,20 @@ contract NftCollection {
     fun mint(sender: Address, msgValue: Int) {
         require(self.next_item_index >= 0, "non-sequential NFTs");
         
+        // Random rarity assignment: 5% Leg, 15% Epic, 30% Rare, 50% Common
+        let r: Int = randomInt(1000);  // 0..999
+        let tier: Int;
+        if (r < 50) {           // 0-49   = 5%  → Legendary (3)
+            tier = 3;
+        } elseif (r < 200) {    // 50-199 = 15% → Epic (2)
+            tier = 2;
+        } elseif (r < 500) {    // 200-499 = 30% → Rare (1)
+            tier = 1;
+        } else {                // 500-999 = 50% → Common (0)
+            tier = 0;
+        }
+        self.rarity_map.set(self.next_item_index, RarityInfo{ tier: tier });
+
         let nft_init: StateInit = self.getNftItemInit(self.next_item_index);
         send(SendParameters{
                 to: contractAddress(nft_init), 
@@ -174,5 +189,34 @@ contract NftCollection {
 
     get fun is_mint_active(): Bool {
         return self.mint_start_time > 0 && now() - self.mint_start_time <= self.mintDuration;
+    }
+
+    // Rarity getters
+    get fun get_rarity(item_index: Int): Int {
+        let info: RarityInfo? = self.rarity_map.get(item_index);
+        if (info == null) {
+            return -1;  // not minted yet
+        }
+        return info!!.tier;
+    }
+
+    get fun get_rarity_name(item_index: Int): String {
+        let info: RarityInfo? = self.rarity_map.get(item_index);
+        if (info == null) {
+            return "unknown";
+        }
+        let t: Int = info!!.tier;
+        if (t == 3) { return "Legendary"; }
+        elseif (t == 2) { return "Epic"; }
+        elseif (t == 1) { return "Rare"; }
+        else { return "Common"; }
+    }
+
+    get fun get_rarity_distribution(): String {
+        let legendaries: Int = 50;   // 5% of 1000
+        let epics: Int = 150;        // 15%
+        let rares: Int = 300;        // 30%
+        let commons: Int = 500;      // 50%  
+        return "L:" + legendaries.toString() + " E:" + epics.toString() + " R:" + rares.toString() + " C:" + commons.toString();
     }
 }

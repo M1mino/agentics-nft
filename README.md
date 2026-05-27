@@ -94,12 +94,19 @@ See [AGENTS.md](./AGENTS.md) for the full list of all 30 characters.
 
 ## 💎 How It Works
 
-1. **Buy NFT** — User purchases from Getgems (free mint, gas only)
-2. **Connect Wallet** — Mini App uses TON Connect to verify ownership
-3. **Choose Agent** — Pick an agent from your NFTs
-4. **Enter API Key** — Bring your own LLM API key (OpenAI, DeepSeek, etc.)
-5. **Get Token** — Mini App generates an activation token
-6. **Talk to Bot** — @AgenticsAIBot proxies messages to your chosen LLM with the character's system prompt
+1. **Buy NFT** — User sends 29 TON to the collection contract
+2. **Random Rarity** — On mint, rarity is randomly assigned:
+   - 🔥 **Legendary** — 5% (50 NFTs)
+   - 💜 **Epic** — 15% (150 NFTs)
+   - 💙 **Rare** — 30% (300 NFTs)
+   - 🤍 **Common** — 50% (500 NFTs)
+3. **14-Day Mint Window** — Minting is open for 14 days after owner starts it
+4. **30-Day Time-Lock** — After mint, NFT cannot be transferred for 30 days
+5. **Connect Wallet** — Mini App uses TON Connect to verify ownership
+6. **Choose Agent** — Pick an agent from your NFTs
+7. **Enter API Key** — Bring your own LLM API key (OpenAI, DeepSeek, etc.)
+8. **Get Token** — Mini App generates an activation token
+9. **Talk to Bot** — @AgenticsAIBot proxies messages to your chosen LLM with the character's system prompt
 
 ### Ownership Verification
 

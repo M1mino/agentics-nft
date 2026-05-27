@@ -1,5 +1,14 @@
 # Agentics — AI Agent NFT Collection on TON
 
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![TON](https://img.shields.io/badge/built%20on-TON-0088CC)](https://ton.org)
+[![Tact](https://img.shields.io/badge/smart%20contract-Tact-41B883)](https://tact-lang.org)
+[![Telegram](https://img.shields.io/badge/bot-%40AgenticsAIBot-2CA5E0)](https://t.me/AgenticsAIBot)
+
+</div>
+
 **Agentics** is a collection of **1,000 NFTs** featuring **30 unique AI agent characters** on the TON blockchain. Each NFT grants access to an interactive AI assistant with a distinct personality, powered by your choice of LLM (OpenAI, DeepSeek, Anthropic, Google).
 
 ⚠️ **Currently on testnet. Mainnet deployment in progress.**

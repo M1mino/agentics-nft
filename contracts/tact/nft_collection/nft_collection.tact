@@ -6,7 +6,8 @@ contract NftCollection {
     
     const minTonsForStorage: Int = ton("0.03");
     const gasConsumption: Int = ton("0.03");
-    const defaultMintPrice: Int = ton("7"); // 7 TON default mint price
+    const defaultMintPrice: Int = ton("29");   // 29 TON
+    const mintDuration: Int = 14 * 86400;       // 14 days in seconds
 
     next_item_index: Int as uint32 = 0;
     owner_address: Address;
@@ -14,6 +15,7 @@ contract NftCollection {
     collection_content: Cell;
     mint_price: Int;
     max_supply: Int;
+    mint_start_time: Int;  // 0 = mint not started, >0 = unix timestamp of start
 
     init(owner_address: Address, collection_content: Cell, royalty_params: RoyaltyParams){
         self.owner_address = owner_address;
@@ -21,6 +23,7 @@ contract NftCollection {
         self.royalty_params = royalty_params;
         self.mint_price = self.defaultMintPrice;
         self.max_supply = 1000;
+        self.mint_start_time = 0;
     }
 
     receive("Mint"){
@@ -29,6 +32,8 @@ contract NftCollection {
 
         require(msgValue >= self.mint_price, "insufficient TON for mint");
         require(self.next_item_index < self.max_supply, "max supply reached");
+        require(self.mint_start_time > 0, "mint not started");
+        require(now() - self.mint_start_time <= self.mintDuration, "mint period ended");
 
         let tonBalanceBeforeMsg: Int = myBalance() - msgValue;
         let storageFee: Int = self.minTonsForStorage - min(tonBalanceBeforeMsg, self.minTonsForStorage);
@@ -46,6 +51,13 @@ contract NftCollection {
         }
 
         self.mint(ctx.sender, msgValue);
+    }
+
+    // Admin: start mint — sets the 14-day window
+    receive("StartMint") {
+        require(context().sender == self.owner_address, "only owner");
+        require(self.mint_start_time == 0, "mint already started");
+        self.mint_start_time = now();
     }
 
     // Admin: set new mint price
@@ -124,7 +136,7 @@ contract NftCollection {
     }
 
     get fun getNftItemInit(item_index: Int): StateInit {
-        return initOf NftItem(myAddress(), item_index, self.owner_address, self.collection_content);
+        return initOf NftItem(myAddress(), item_index, self.owner_address, self.collection_content, 0);
     }
     
     get fun get_nft_content(index: Int, individual_content: Cell): Cell { 
@@ -150,5 +162,17 @@ contract NftCollection {
 
     get fun get_minted_count(): Int {
         return self.next_item_index;
+    }
+
+    get fun get_mint_start_time(): Int {
+        return self.mint_start_time;
+    }
+
+    get fun get_mint_duration(): Int {
+        return self.mintDuration;
+    }
+
+    get fun is_mint_active(): Bool {
+        return self.mint_start_time > 0 && now() - self.mint_start_time <= self.mintDuration;
     }
 }

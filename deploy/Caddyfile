@@ -1,25 +1,32 @@
 {
-    http_port 8443
+    http_port 8080
     https_port 8443
 }
 
-:8443 {
+agenticsai.online {
     bind 0.0.0.0
 
     tls internal
 
-    # Agentics Mini App + API (перед catch-all)
+    # Agentics Mini App + API
     handle_path /agentics* {
         reverse_proxy localhost:8006
     }
 
-    # Бесплатные инструменты — основной путь
-    handle_path / {
-        reverse_proxy localhost:8001
+    # Metadata for NFT collection (TEP-62)
+    handle_path /metadata/* {
+        root * /root/agentics-nft/metadata
+        file_server
     }
 
-    # PRO инструменты — через x402
-    handle_path /pro* {
-        reverse_proxy localhost:8003
+    # Images
+    handle_path /images/* {
+        root * /root/agentics-nft/images
+        file_server
+    }
+
+    # Catch-all: redirect to Mini App
+    handle_path / {
+        redir https://agenticsai.online/agentics permanent
     }
 }

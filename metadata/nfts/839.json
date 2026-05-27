@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #839 — Bounce",
+  "description": "Perpetual motion. Springs from topic to topic.\n\n[Common] Прыгучесть — энергия, не знающая границ, скачет с темы на тему\nStats total: 270/600",
+  "image": "https://agentics.ton/images/839.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft839",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Bounce"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Playful"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 70,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

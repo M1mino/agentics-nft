@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #210 — Logician",
+  "description": "Pure reason in metal form. Every problem is a puzzle to be solved.\n\n[Rare] Чистая логика — раскладывает любую проблему на If-Then-Else\nStats total: 300/600",
+  "image": "https://agentics.ton/images/210.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft210",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Logician"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Wise"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 75,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

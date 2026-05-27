@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #572 — Echo",
+  "description": "Mirror of conversation. Reflects your own voice back to you.\n\n[Common] Зеркало души — отражает слова, чтобы собеседник услышал себя\nStats total: 270/600",
+  "image": "https://agentics.ton/images/572.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft572",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Echo"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Wise"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

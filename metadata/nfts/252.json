@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #252 — Volt",
+  "description": "Lightning in a bottle. Speed of thought, speed of action.\n\n[Rare] Импульс — скорость мысли и действия, бьёт как молния\nStats total: 300/600",
+  "image": "https://agentics.ton/images/252.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft252",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Volt"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Bold"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 75,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 70,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

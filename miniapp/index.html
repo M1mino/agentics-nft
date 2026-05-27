@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Agentics — AI Robot Mascots on TON</title>
+  <meta name="description" content="30 unique AI robot mascots on TON. Buy NFT, activate your AI agent, and converse with your own personality." />
+  <meta property="og:title" content="Agentics — AI Robot Mascots" />
+  <meta property="og:description" content="30 unique AI agents on TON. Collect. Activate. Converse." />
+  <meta property="og:image" content="https://som919-archetypebots.static.hf.space/assets/og-preview.png" />
+  <meta property="og:url" content="https://som919-archetypebots.static.hf.space" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0a0a1a" />
+  <link rel="icon" type="image/png" href="https://som919-archetypebots.static.hf.space/assets/logo.png" />
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --gold: #d4a843;
+      --gold-light: #f7e8aa;
+      --gold-dark: #b8862d;
+      --bg-dark: #0a0a1a;
+      --bg-card: rgba(255,255,255,0.03);
+      --border-gold: rgba(212,168,67,0.2);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a1a;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Particles canvas ─── */
+    #particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Header ─── */
+    .header {
+      text-align: center;
+      padding: 30px 0 10px;
+      animation: fadeDown 0.6s ease-out;
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .header .logo {
+      font-size: 48px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .header p {
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      margin-top: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .header .testnet-badge {
+      display: inline-block;
+      background: rgba(212,168,67,0.12);
+      color: var(--gold);
+      font-size: 9px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(212,168,67,0.25);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 6px;
+    }
+
+    /* ─── Connect widget ─── */
+    .connect-widget {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 5px 0;
+      animation: fadeUp 0.6s ease-out 0.1s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .status-msg {
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      min-height: 20px;
+      text-align: center;
+      animation: fadeUp 0.4s ease-out;
+    }
+    .error { color: #ff6b6b !important; }
+    .success { color: #51cf66 !important; }
+
+    /* ─── Cards ─── */
+    .card {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border: 1px solid rgba(212,168,67,0.1);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      animation: fadeUp 0.6s ease-out 0.2s both;
+    }
+    .card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .card p {
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ─── Agent Card ─── */
+    .agent-card {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(212,168,67,0.15);
+      animation: fadeUp 0.6s ease-out 0.3s both;
+      position: relative;
+      overflow: hidden;
+    }
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(212,168,67,0.04), transparent 60%);
+      animation: rotateGlow 8s linear infinite;
+    }
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .agent-art {
+      width: 140px;
+      height: 140px;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 2px solid rgba(212,168,67,0.2);
+      background: rgba(0,0,0,0.3);
+      transition: transform 0.3s, border-color 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .agent-art:hover {
+      transform: scale(1.05);
+      border-color: var(--gold);
+    }
+    .agent-card .name {
+      font-size: 22px;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+    .agent-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .agent-tags .tag {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .tag-legendary { background: linear-gradient(135deg, #d4a84330, #b8862d30); color: var(--gold); border: 1px solid rgba(212,168,67,0.3); }
+    .tag-epic { background: rgba(138, 92, 245, 0.15); color: #b388ff; border: 1px solid rgba(138, 92, 245, 0.25); }
+    .tag-rare { background: rgba(41, 182, 246, 0.15); color: #4fc3f7; border: 1px solid rgba(41, 182, 246, 0.25); }
+    .tag-common { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.1); }
+    .tag-category { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.08); }
+
+    /* ─── Form ─── */
+    .form-group {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,168,67,0.12);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,168,67,0.1);
+    }
+    .form-group select option { background: #12122a; color: #fff; }
+    .form-group input::placeholder { color: rgba(255,255,255,0.2); }
+
+    /* ─── Button ─── */
+    .btn {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #0a0a1a;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212,168,67,0.3);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* ─── Token display ─── */
+    .token-display {
+      background: linear-gradient(135deg, rgba(212,168,67,0.1), rgba(212,168,67,0.02));
+      border: 1px solid rgba(212,168,67,0.2);
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      text-align: center;
+      animation: fadeUp 0.5s ease-out;
+    }
+    .token-display .code {
+      font-family: 'Inter', monospace;
+      font-size: 16px;
+      color: var(--gold);
+      word-break: break-all;
+      background: rgba(0,0,0,0.2);
+      padding: 12px;
+      border-radius: 10px;
+      margin: 10px 0;
+      letter-spacing: 1px;
+    }
+    .token-display .hint {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 8px;
+    }
+
+    .hidden { display: none !important; }
+
+    /* ─── Loading spinner ─── */
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── Gallery preview ─── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.08);
+      border-color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <div class="container">
+    <div class="header">
+      <span class="logo">🤖</span>
+      <h1>Agentics</h1>
+      <p>AI Robot Mascots on TON</p>
+      <span class="testnet-badge">⧩ testnet</span>
+    </div>
+
+    <div class="connect-widget" id="ton-connect"></div>
+    <div class="status-msg" id="status-msg"></div>
+
+    <!-- No NFT -->
+    <div class="card hidden" id="no-nft-card">
+      <h2>🔮 No Agent Detected</h2>
+      <p style="margin-bottom:16px;">You need an Agent NFT from our collection to activate your AI companion.</p>
+      <a class="btn" href="https://getgems.io/collection/EQC_UNVutKasGbtxaK57c2ENCytuKUvvEYy9BuOWLpsnRS_k" target="_blank" rel="noopener">🛒 Buy on GetGems</a>
+    </div>
+
+    <!-- Agent found → Activate -->
+    <div class="hidden" id="agent-section">
+      <div class="agent-card" id="agent-card">
+        <img class="agent-art" id="agent-art" src="" alt="Agent" />
+        <div class="name" id="agent-name">Agent</div>
+        <div class="agent-tags">
+          <span class="tag" id="agent-rarity-tag">MYSTIC</span>
+          <span class="tag tag-category" id="agent-category-tag">WISE</span>
+        </div>
+      </div>
+
+      <!-- NFT selection -->
+      <div class="card hidden" id="nft-selection" style="animation-delay:0.35s;">
+        <h2>🎯 Select Your NFT</h2>
+        <div class="form-group">
+          <label>Your Agents</label>
+          <select id="nft-select" onchange="onNFTChange()"></select>
+        </div>
+      </div>
+
+      <div class="card" style="animation-delay:0.4s;">
+        <h2>🔑 Activate</h2>
+        <p style="margin-bottom:16px;">Enter your API key to connect the AI. You pay for your own tokens.</p>
+
+        <div class="form-group">
+          <label>Provider</label>
+          <select id="provider-select" onchange="onProviderChange()">
+            <option value="openai">OpenAI</option>
+            <option value="deepseek">DeepSeek</option>
+            <option value="anthropic">Anthropic (Claude)</option>
+            <option value="google">Google Gemini</option>
+            <option value="custom">Other (OpenAI-compatible)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>API Key</label>
+          <input type="password" id="api-key-input" placeholder="sk-..." autocomplete="off" />
+        </div>
+
+        <div class="form-group" id="model-group">
+          <label>Model</label>
+          <input type="text" id="model-input" placeholder="gpt-4o-mini" />
+        </div>
+
+        <div class="form-group hidden" id="baseurl-group">
+          <label>Base URL</label>
+          <input type="text" id="baseurl-input" placeholder="https://api.openai.com/v1" />
+        </div>
+
+        <div class="form-group">
+          <label>Character (optional)</label>
+          <select id="char-select" onchange="onCharChange()">
+            <option value="">Auto-detect</option>
+          </select>
+        </div>
+
+        <button class="btn" id="activate-btn" onclick="activate()" disabled>🚀 Activate Agent</button>
+      </div>
+
+      <!-- Token -->
+      <div class="token-display hidden" id="token-section">
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px;">✅ Agent Activated!</p>
+        <p class="hint" style="margin-bottom:8px;">Send this code to <strong>@AgenticsAIBot</strong></p>
+        <div class="code" id="token-code"></div>
+        <br>
+        <a class="btn" id="open-bot-btn" href="https://t.me/AgenticsAIBot" target="_blank">💬 Open @AgenticsAIBot</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = window.location.origin + '/agentics';
+    const COLLECTION_ADDRESS = "EQC_UNVutKasGbtxaK57c2ENCytuKUvvEYy9BuOWLpsnRS_k";
+    const IS_TESTNET = true;
+
+    const PROVIDER_DEFAULTS = {
+      openai:   { model: "gpt-4o-mini",              baseurl: "https://api.openai.com/v1",       placeholder: "sk-..." },
+      deepseek: { model: "deepseek-chat",            baseurl: "https://api.deepseek.com/v1",     placeholder: "sk-..." },
+      anthropic:{ model: "claude-sonnet-4-20250514", baseurl: "",                                 placeholder: "sk-ant-..." },
+      google:   { model: "gemini-2.0-flash",         baseurl: "",                                 placeholder: "AIza..." },
+      custom:   { model: "deepseek-chat",            baseurl: "https://api.openai.com/v1",        placeholder: "sk-..." },
+    };
+
+    let tonConnectUI;
+    let wallet = null;
+    let myNFTs = [];
+    let allCharacters = {};
+
+    /* ─── Particles ─── */
+    function initParticles() {
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      let w, h, particles = [];
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      for (let i = 0; i < 50; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2 + 0.5,
+          dx: (Math.random() - 0.5) * 0.3,
+          dy: (Math.random() - 0.5) * 0.3,
+          a: Math.random() * 0.3 + 0.1,
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => {
+          p.x += p.dx;
+          p.y += p.dy;
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(212,168,67,${p.a})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+    initParticles();
+
+    /* ─── UI ─── */
+    function onProviderChange() {
+      const prov = document.getElementById('provider-select').value;
+      const defs = PROVIDER_DEFAULTS[prov] || PROVIDER_DEFAULTS.openai;
+      const modelInput = document.getElementById('model-input');
+      modelInput.value = modelInput.value || defs.model;
+      modelInput.placeholder = defs.model;
+      document.getElementById('api-key-input').placeholder = defs.placeholder;
+
+      const baseurlGroup = document.getElementById('baseurl-group');
+      const baseurlInput = document.getElementById('baseurl-input');
+      if (prov === 'openai' || prov === 'deepseek' || prov === 'custom') {
+        baseurlGroup.classList.remove('hidden');
+        baseurlInput.value = baseurlInput.value || defs.baseurl;
+        baseurlInput.placeholder = defs.baseurl;
+      } else {
+        baseurlGroup.classList.add('hidden');
+        baseurlInput.value = '';
+      }
+    }
+
+    function onCharChange() {
+      const name = document.getElementById('char-select').value;
+      updateAgentArt(name);
+    }
+
+    function onNFTChange() {
+      const addr = document.getElementById('nft-select').value;
+      const nft = myNFTs.find(n => n.address === addr);
+      if (nft) {
+        const meta = nft.metadata || {};
+        document.getElementById('agent-name').textContent = meta.name || `Agent #${nft.index}`;
+        document.getElementById('agent-rarity-tag').textContent = meta.attributes?.[0]?.value || 'MYSTIC';
+        updateRarityTag(meta.attributes?.[0]?.value || '');
+      }
+    }
+
+    function updateRarityTag(rarity) {
+      const tag = document.getElementById('agent-rarity-tag');
+      tag.className = 'tag';
+      const cls = (rarity || '').toLowerCase();
+      if (cls === 'legendary') tag.classList.add('tag-legendary');
+      else if (cls === 'epic') tag.classList.add('tag-epic');
+      else if (cls === 'rare') tag.classList.add('tag-rare');
+      else tag.classList.add('tag-common');
+    }
+
+    function updateAgentArt(charName) {
+      const img = document.getElementById('agent-art');
+      if (charName) {
+        const encoded = encodeURIComponent(charName);
+        img.src = API_URL + '/api/images/' + encoded;
+        img.onerror = () => { img.src = ''; img.style.display = 'none'; };
+        img.style.display = '';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+      }
+    }
+
+    async function init() {
+      tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: API_URL + '/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect'
+      });
+
+      if (tonConnectUI.wallet) {
+        wallet = tonConnectUI.wallet;
+        onWalletConnected();
+      }
+      tonConnectUI.onStatusChange(w => {
+        wallet = w;
+        if (w) onWalletConnected();
+        else onWalletDisconnected();
+      });
+
+      try {
+        const resp = await fetch(API_URL + '/api/characters');
+        allCharacters = await resp.json();
+        const select = document.getElementById('char-select');
+        select.innerHTML = '<option value="">Auto-detect</option>';
+        for (const [name, data] of Object.entries(allCharacters)) {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = `${name} (${data.rarity} ${data.category})`;
+          select.appendChild(opt);
+        }
+      } catch(e) {}
+    }
+
+    function onWalletConnected() {
+      setStatus('🔍 Scanning for your agents...');
+      document.getElementById('no-nft-card').classList.add('hidden');
+      document.getElementById('agent-section').classList.add('hidden');
+      document.getElementById('token-section').classList.add('hidden');
+      checkNFTs();
+    }
+
+    function onWalletDisconnected() {
+      setStatus('Connect your TON wallet to begin');
+      document.getElementById('no-nft-card').classList.add('hidden');
+      document.getElementById('agent-section').classList.add('hidden');
+    }
+
+    async function checkNFTs() {
+      if (!wallet) return;
+      try {
+        const address = wallet.account.address;
+        const baseUrl = IS_TESTNET ? 'https://testnet.toncenter.com' : 'https://toncenter.com';
+        const resp = await fetch(`${baseUrl}/api/v3/nft/items?owner_address=${address}&collection_address=${COLLECTION_ADDRESS}&limit=100`);
+        const data = await resp.json();
+        myNFTs = data.nft_items || [];
+
+        if (myNFTs.length > 0) {
+          const nftSelect = document.getElementById('nft-select');
+          nftSelect.innerHTML = '';
+          myNFTs.forEach((nft, i) => {
+            const meta = nft.metadata || {};
+            const label = meta.name || `Agent #${nft.index}`;
+            const opt = document.createElement('option');
+            opt.value = nft.address;
+            opt.textContent = `${label} (NFT #${nft.index})`;
+            nftSelect.appendChild(opt);
+          });
+
+          document.getElementById('nft-selection').classList.toggle('hidden', myNFTs.length <= 1);
+
+          const first = myNFTs[0];
+          const meta = first.metadata || {};
+          document.getElementById('agent-name').textContent = meta.name || `Agent #${first.index}`;
+          const rarity = meta.attributes?.[0]?.value || 'MYSTIC';
+          document.getElementById('agent-rarity-tag').textContent = rarity;
+          updateRarityTag(rarity);
+          document.getElementById('agent-category-tag').textContent = meta.attributes?.[1]?.value || '';
+
+          // Пробуем загрузить арт из имени NFT
+          const agentName = meta.name || '';
+          if (agentName) {
+            const namePart = agentName.replace(/^ArchetypeBot #\d+\s*—\s*/i, '');
+            updateAgentArt(namePart || '');
+          }
+
+          document.getElementById('agent-section').classList.remove('hidden');
+          document.getElementById('activate-btn').disabled = false;
+          setStatus(`✨ ${myNFTs.length} agent(s) detected — enter API key`);
+        } else {
+          document.getElementById('no-nft-card').classList.remove('hidden');
+          setStatus('');
+        }
+      } catch(e) {
+        setStatus('⚠️ Error: ' + (e.message || 'unknown'), true);
+      }
+    }
+
+    async function activate() {
+      const apiKey = document.getElementById('api-key-input').value.trim();
+      if (!apiKey) {
+        setStatus('⚠️ Enter your API key first', true);
+        return;
+      }
+
+      const provider = document.getElementById('provider-select').value;
+      const model = document.getElementById('model-input').value.trim();
+      let baseUrl = document.getElementById('baseurl-input').value.trim();
+      if (!baseUrl) {
+        const defs = PROVIDER_DEFAULTS[provider];
+        if (provider === 'anthropic') baseUrl = 'https://api.anthropic.com';
+        else if (provider === 'google') baseUrl = 'https://generativelanguage.googleapis.com';
+        else baseUrl = defs ? defs.baseurl : 'https://api.openai.com/v1';
+      }
+
+      const nftSelect = document.getElementById('nft-select');
+      const nftAddress = nftSelect.value || (myNFTs.length > 0 ? myNFTs[0].address : '');
+      const walletAddr = wallet ? wallet.account.address : '';
+
+      const charSelect = document.getElementById('char-select');
+      const charName = charSelect.value === '' ? '' : charSelect.value;
+
+      setStatus('⏳ Generating activation token...');
+      document.getElementById('activate-btn').disabled = true;
+
+      try {
+        const resp = await fetch(API_URL + '/api/activate', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            wallet: walletAddr,
+            api_key: apiKey,
+            provider: provider,
+            model: model,
+            base_url: baseUrl,
+            nft_address: nftAddress,
+            char_name: charName,
+          }),
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          setStatus('⚠️ ' + (err.detail || 'Activation failed'), true);
+          document.getElementById('activate-btn').disabled = false;
+          return;
+        }
+
+        const result = await resp.json();
+        document.getElementById('token-code').textContent = result.token;
+        document.getElementById('token-section').classList.remove('hidden');
+        document.getElementById('open-bot-btn').href = 'https://t.me/' + result.bot_username;
+        document.getElementById('api-key-input').value = '';
+        setStatus('✅ Activation token generated!', false, true);
+
+        // Плавный скролл к токену
+        document.getElementById('token-section').scrollIntoView({ behavior: 'smooth' });
+      } catch(e) {
+        setStatus('⚠️ Error: ' + (e.message || 'network error'), true);
+        document.getElementById('activate-btn').disabled = false;
+      }
+    }
+
+    function setStatus(msg, isError = false, isSuccess = false) {
+      const el = document.getElementById('status-msg');
+      el.textContent = msg;
+      el.className = 'status-msg';
+      if (isError) el.classList.add('error');
+      if (isSuccess) el.classList.add('success');
+      // Spinner while loading
+      if (msg.startsWith('⏳') || msg.startsWith('🔍') || msg.startsWith('✨')) {
+        el.innerHTML = '<span class="spinner"></span> ' + msg.replace(/^[^\s]+\s/, '');
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

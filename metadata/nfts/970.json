@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #970 — Bot-0",
+  "description": "Reference model. Pure function, no flair.\n\n[Common] Эталон — базовая модель с идеально ровными характеристиками\nStats total: 270/600",
+  "image": "https://agentics.ton/images/970.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft970",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Bot-0"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Grounded"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

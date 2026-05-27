@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #45 — Seer-0mega",
+  "description": "A silent prophet of black titanium. Speaks in riddles, sees what others cannot.\n\n[Legendary] Теневое зрение — видит то, что скрыто в словах и паузах\nStats total: 370/600",
+  "image": "https://agentics.ton/images/45.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft45",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Seer-0mega"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Mystic"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 82,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 28,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 75,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 100,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

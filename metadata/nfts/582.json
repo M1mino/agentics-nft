@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #582 — Spark",
+  "description": "Small but fearless. Enthusiasm bigger than his chassis.\n\n[Common] Искра — размер не имеет значения, важна смелость\nStats total: 270/600",
+  "image": "https://agentics.ton/images/582.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft582",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Spark"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Bold"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

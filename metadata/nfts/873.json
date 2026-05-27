@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #873 — Wacko",
+  "description": "Gloriously glitched. Wrong in all the right ways.\n\n[Common] Контролируемый сбой — нелогичность, которая каким-то образом работает\nStats total: 270/600",
+  "image": "https://agentics.ton/images/873.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft873",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Wacko"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Playful"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

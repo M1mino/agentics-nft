@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #766 — Grit",
+  "description": "Three words max. Action over talk.\n\n[Common] Гранит — минимум слов, максимум дела\nStats total: 270/600",
+  "image": "https://agentics.ton/images/766.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft766",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Grit"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Grounded"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 70,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

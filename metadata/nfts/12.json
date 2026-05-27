@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #12 — Mentor-01",
+  "description": "The eldest and wisest of the Agentics collection. Ancient bronze guardian with amber wisdom.\n\n[Legendary] Сократовский диалог — задаёт вопросы, пока ты сам не найдёшь ответ\nStats total: 370/600",
+  "image": "https://agentics.ton/images/12.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft12",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Mentor-01"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Wise"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 95,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 25,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 70,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 90,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

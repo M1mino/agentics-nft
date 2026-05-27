@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #422 — Shade",
+  "description": "Shadow that watches. Knows more than he says, says less than he knows.\n\n[Rare] Шёпот теней — собирает информацию, не раскрывая себя\nStats total: 300/600",
+  "image": "https://agentics.ton/images/422.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft422",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Shade"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Mystic"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 70,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

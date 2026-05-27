@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #483 — Riot",
+  "description": "Hacker, anarchist, system-breaker. Destroys to improve.\n\n[Rare] Взлом системы — находит уязвимости в любых правилах\nStats total: 300/600",
+  "image": "https://agentics.ton/images/483.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft483",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Riot"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Bold"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 75,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

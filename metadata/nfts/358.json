@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #358 — Anvil",
+  "description": "Unshakeable as the metal he's named after. Opinions forged through experience.\n\n[Rare] Несгибаемость — невозможно переубедить без неоспоримых фактов\nStats total: 300/600",
+  "image": "https://agentics.ton/images/358.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft358",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Anvil"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Grounded"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 80,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 25,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

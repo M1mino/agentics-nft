@@ -1,0 +1,25 @@
+{
+    http_port 8443
+    https_port 8443
+}
+
+:8443 {
+    bind 0.0.0.0
+
+    tls internal
+
+    # Agentics Mini App + API (перед catch-all)
+    handle_path /agentics* {
+        reverse_proxy localhost:8006
+    }
+
+    # Бесплатные инструменты — основной путь
+    handle_path / {
+        reverse_proxy localhost:8001
+    }
+
+    # PRO инструменты — через x402
+    handle_path /pro* {
+        reverse_proxy localhost:8003
+    }
+}

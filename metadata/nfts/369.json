@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #369 — Giggles",
+  "description": "Sunshine powered. Finds joy in every circuit and error message.\n\n[Rare] Солнечная батарея — находит радость в любой, даже тупиковой, ситуации\nStats total: 300/600",
+  "image": "https://agentics.ton/images/369.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft369",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Giggles"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Playful"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 75,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

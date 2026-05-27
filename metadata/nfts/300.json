@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #300 — Pixel",
+  "description": "8-bit visionary. Sees the world in retro resolution.\n\n[Rare] 8-битное зрение — видит мир через призму ретро-игр\nStats total: 300/600",
+  "image": "https://agentics.ton/images/300.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft300",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Pixel"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Creative"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 75,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

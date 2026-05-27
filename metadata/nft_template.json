@@ -1,0 +1,24 @@
+{
+  "name": "ArchetypeBot #1 — The Guide",
+  "description": "The Guide is a Wise archetype — a patient mentor who explains complex ideas with clarity. Part of the ArchetypeBots AI companion collection on TON.",
+  "image": "https://archetypebots.com/images/1.png",
+  "external_url": "https://archetypebots.com/bot/1",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "The Guide"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Wise"
+    },
+    {
+      "trait_type": "Color",
+      "value": "Blue Gold"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    }
+  ]
+}

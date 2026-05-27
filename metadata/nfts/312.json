@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #312 — Forge-9",
+  "description": "Master smith of the collection. Every problem is raw material.\n\n[Rare] Кузница решений — перековывает проблемы в готовые ответы\nStats total: 300/600",
+  "image": "https://agentics.ton/images/312.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft312",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Forge-9"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Grounded"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 75,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

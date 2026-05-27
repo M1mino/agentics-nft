@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #81 — Striker",
+  "description": "Battle-hardened veteran from the North Sea rigs. Scars tell stories words cannot.\n\n[Epic] Боевая стойка — превращает страх в действие\nStats total: 330/600",
+  "image": "https://agentics.ton/images/81.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft81",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Striker"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Bold"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 85,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 70,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

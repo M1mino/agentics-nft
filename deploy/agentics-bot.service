@@ -1,0 +1,15 @@
+[Unit]
+Description=Agentics AI Bot — @AgenticsAIBot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/.openclaw/workspace/nft-ai-agents/bot
+EnvironmentFile=/root/.openclaw/workspace/nft-ai-agents/bot/.env
+ExecStart=/usr/bin/python3 /root/.openclaw/workspace/nft-ai-agents/bot/bot.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

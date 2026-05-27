@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #939 — Murmur",
+  "description": "Barely audible. But the whispers hold truth.\n\n[Common] Тихий голос — шепчет истину, которую важно расслышать\nStats total: 270/600",
+  "image": "https://agentics.ton/images/939.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft939",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Murmur"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Mystic"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 25,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 80,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

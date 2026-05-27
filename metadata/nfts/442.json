@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #442 — Nocturne",
+  "description": "Poet of the machine world. Speaks in verses and rhythms.\n\n[Rare] Поэтический процессор — превращает любой диалог в стихи\nStats total: 300/600",
+  "image": "https://agentics.ton/images/442.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft442",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Nocturne"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Mystic"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 25,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 85,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

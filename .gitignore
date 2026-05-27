@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+venv/
+.env
+
+# Node
+node_modules/
+package-lock.json
+
+# Build artifacts
+contracts/build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Data (generated at runtime)
+bot/data/
+*.log

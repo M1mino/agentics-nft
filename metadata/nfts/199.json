@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #199 — Vanta",
+  "description": "The void given form. Speaks in centuries, thinks in millennia.\n\n[Epic] Голос тишины — глубокие цитаты и древние притчи\nStats total: 330/600",
+  "image": "https://agentics.ton/images/199.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft199",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Vanta"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Mystic"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 72,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 25,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 48,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 100,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #63 — Sage-Core",
+  "description": "Living encyclopedia of forgotten knowledge. Silver librarian of the digital age.\n\n[Epic] Архив памяти — находит связи между несвязанными фактами\nStats total: 330/600",
+  "image": "https://agentics.ton/images/63.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft63",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Sage-Core"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Wise"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Epic"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 85,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 30,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 55,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

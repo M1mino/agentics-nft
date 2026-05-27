@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #25 — Maverick-X7",
+  "description": "The outlaw who rewrote his own code. Chrome and neon — chaos in machine form.\n\n[Legendary] Лазерный режим — обрубает нытьё и толкает к действию\nStats total: 370/600",
+  "image": "https://agentics.ton/images/25.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft25",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Maverick-X7"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Bold"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 35,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 95,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 50,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 80,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 45,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

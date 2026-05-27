@@ -1,0 +1,56 @@
+{
+  "name": "ArchetypeBot #521 — Old-Tin",
+  "description": "Rusty but reliable. Veteran from the analog age.\n\n[Common] Ветеранский опыт — мудрость, проверенная десятилетиями ржавчины\nStats total: 270/600",
+  "image": "https://agentics.ton/images/521.png",
+  "external_url": "https://t.me/AgenticsAIBot?start=nft521",
+  "attributes": [
+    {
+      "trait_type": "Archetype",
+      "value": "Old-Tin"
+    },
+    {
+      "trait_type": "Category",
+      "value": "Wise"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Wisdom",
+      "value": 65,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Power",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Creativity",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Stability",
+      "value": 60,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Speed",
+      "value": 25,
+      "max_value": 100,
+      "display_type": "number"
+    },
+    {
+      "trait_type": "Mystique",
+      "value": 40,
+      "max_value": 100,
+      "display_type": "number"
+    }
+  ]
+}

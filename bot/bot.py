@@ -20,7 +20,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 TONCENTER_API = "https://toncenter.com/api/v3"
 COLLECTION_ADDRESS = "EQC_UNVutKasGbtxaK57c2ENCytuKUvvEYy9BuOWLpsnRS_k"
 GETGEMS_URL = f"https://getgems.io/collection/{COLLECTION_ADDRESS}"
-MINI_APP_URL = "http://81.177.159.90:8443/agentics"
+MINI_APP_URL = "https://agenticsai.online/agentics"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"

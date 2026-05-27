@@ -4,7 +4,7 @@ import { NftCollection } from "../wrappers/NftCollection";
 
 export async function run(provider: NetworkProvider) {
     const OFFCHAIN_CONTENT_PREFIX = 0x01;
-    const METADATA_BASE_URL = "https://archetypebots.com/metadata/";
+    const METADATA_BASE_URL = "https://agenticsai.online/metadata/";
     let newContent = beginCell().storeInt(OFFCHAIN_CONTENT_PREFIX, 8).storeStringRefTail(METADATA_BASE_URL).endCell();
 
     let owner = provider.sender().address!;

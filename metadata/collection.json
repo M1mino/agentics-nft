@@ -1,6 +1,8 @@
 {
-  "name": "Agentics — AI Robot Mascots",
-  "description": "31 unique AI robot mascots across 4 rarities. Each NFT unlocks an AI personality in Telegram. 6 stats per character. 1000 NFTs on TON.",
-  "image": "https://agentics.ton/images/collection.png",
-  "external_link": "https://t.me/AgenticsAIBot"
+  "name": "Agentics — AI Agent NFTs",
+  "description": "1,000 AI agent characters on TON with real utility. 30 unique personalities across 4 rarity tiers. Each NFT unlocks an interactive AI assistant in Telegram.",
+  "image": "https://agenticsai.online/images/collection_cover.png",
+  "cover_image": "https://agenticsai.online/images/collection_cover.png",
+  "external_link": "https://t.me/AgenticsAIBot",
+  "social_links": ["https://t.me/AgenticsAIBot"]
 }

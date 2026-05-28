@@ -63,14 +63,12 @@ contract NftItem {
                 }); 
             }
             msgValue = msgValue - ctx.readForwardFee(); 
-            if (msg.response_destination != null) { 
-                send(SendParameters{ 
-                    to: msg.response_destination,
-                    value: msgValue - msg.forward_amount,
-                    mode: SendPayGasSeparately,
-                    body: Excesses { query_id: msg.query_id }.toCell()
-                });
-            } 
+            send(SendParameters{ 
+                to: msg.response_destination,
+                value: msgValue - msg.forward_amount,
+                mode: SendPayGasSeparately,
+                body: Excesses { query_id: msg.query_id }.toCell()
+            }); 
         }
     }
     

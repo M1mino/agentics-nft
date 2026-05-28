@@ -90,11 +90,11 @@ contract NftCollection {
         require(self.mint_start_time > 0, "mint not started");
 
         // Random rarity
-        let r: Int = randomInt(1000);
-        let tier: Int;
+        let r: Int = randomInt() % 1000;
+        let tier: Int = 0;
         if (r < 50) { tier = 3; }
-        elseif (r < 200) { tier = 2; }
-        elseif (r < 500) { tier = 1; }
+        else if (r < 200) { tier = 2; }
+        else if (r < 500) { tier = 1; }
         else { tier = 0; }
         self.rarity_map.set(self.next_item_index, RarityInfo{ tier: tier });
 
@@ -124,13 +124,13 @@ contract NftCollection {
         require(self.next_item_index >= 0, "non-sequential NFTs");
         
         // Random rarity assignment: 5% Leg, 15% Epic, 30% Rare, 50% Common
-        let r: Int = randomInt(1000);  // 0..999
-        let tier: Int;
+        let r: Int = randomInt() % 1000;  // 0..999
+        let tier: Int = 0;
         if (r < 50) {           // 0-49   = 5%  → Legendary (3)
             tier = 3;
-        } elseif (r < 200) {    // 50-199 = 15% → Epic (2)
+        } else if (r < 200) {    // 50-199 = 15% → Epic (2)
             tier = 2;
-        } elseif (r < 500) {    // 200-499 = 30% → Rare (1)
+        } else if (r < 500) {    // 200-499 = 30% → Rare (1)
             tier = 1;
         } else {                // 500-999 = 50% → Common (0)
             tier = 0;
@@ -248,8 +248,8 @@ contract NftCollection {
         }
         let t: Int = info!!.tier;
         if (t == 3) { return "Legendary"; }
-        elseif (t == 2) { return "Epic"; }
-        elseif (t == 1) { return "Rare"; }
+        else if (t == 2) { return "Epic"; }
+        else if (t == 1) { return "Rare"; }
         else { return "Common"; }
     }
 
@@ -258,7 +258,16 @@ contract NftCollection {
         let epics: Int = 150;        // 15%
         let rares: Int = 300;        // 30%
         let commons: Int = 500;      // 50%  
-        return "L:" + legendaries.toString() + " E:" + epics.toString() + " R:" + rares.toString() + " C:" + commons.toString();
+        let b: StringBuilder = beginString();
+        b.append("L:");
+        b.append(legendaries.toString());
+        b.append(" E:");
+        b.append(epics.toString());
+        b.append(" R:");
+        b.append(rares.toString());
+        b.append(" C:");
+        b.append(commons.toString());
+        return b.toString();
     }
 
     // Airdrop: check if address is on whitelist

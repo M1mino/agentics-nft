@@ -11,12 +11,13 @@ contract NftCollection {
 
     next_item_index: Int as uint32 = 0;
     owner_address: Address;
-    royalty_params: RoyaltyParams;                      
+    royalty_params: RoyaltyParams;                     
     collection_content: Cell;
     mint_price: Int;
     max_supply: Int;
     mint_start_time: Int;  // 0 = mint not started, >0 = unix timestamp of start
     rarity_map: map<Int, RarityInfo>;  // item_index → rarity tier
+    airdrop_list: map<Address, Bool>;  // whitelist for free mint
 
     init(owner_address: Address, collection_content: Cell, royalty_params: RoyaltyParams){
         self.owner_address = owner_address;
@@ -31,7 +32,23 @@ contract NftCollection {
         let ctx: Context = context();
         let msgValue: Int = ctx.value;
 
-        require(msgValue >= self.mint_price, "insufficient TON for mint");
+        // Check if sender is on airdrop whitelist — skip price check
+        let isAirdropWinner: Bool = false;
+        if (self.airdrop_list != null) {
+            let val: Bool? = self.airdrop_list.get(ctx.sender);
+            if (val != null and val!!) {
+                isAirdropWinner = true;
+            }
+        }
+
+        if (isAirdropWinner) {
+            // Airdrop: just need enough to cover storage + gas
+            require(msgValue >= self.minTonsForStorage + self.gasConsumption, "insufficient gas for airdrop mint");
+        } else {
+            // Regular mint: full price check
+            require(msgValue >= self.mint_price, "insufficient TON for mint");
+        }
+        
         require(self.next_item_index < self.max_supply, "max supply reached");
         require(self.mint_start_time > 0, "mint not started");
         require(now() - self.mint_start_time <= self.mintDuration, "mint period ended");
@@ -76,6 +93,19 @@ contract NftCollection {
             mode: SendPayGasSeparately + SendRemainingValue,
             body: Excesses{ query_id: 0 }.toCell()
         });
+    }
+
+    // Owner: add address to airdrop whitelist
+    receive(msg: AddAirdropWinner) {
+        require(context().sender == self.owner_address, "only owner");
+        require(self.next_item_index < self.max_supply, "max supply reached");
+        self.airdrop_list.set(msg.address, true);
+    }
+
+    // Owner: remove address from airdrop whitelist
+    receive(msg: RemoveAirdropWinner) {
+        require(context().sender == self.owner_address, "only owner");
+        self.airdrop_list.del(msg.address);
     }
 
     // ===== Private Methods ===== //
@@ -145,7 +175,7 @@ contract NftCollection {
         };
     }
 
-    get fun get_nft_address_by_index(item_index: Int): Address?{      
+    get fun get_nft_address_by_index(item_index: Int): Address?{     
         let initCode: StateInit = self.getNftItemInit(item_index);
         return contractAddress(initCode);
     }
@@ -218,5 +248,25 @@ contract NftCollection {
         let rares: Int = 300;        // 30%
         let commons: Int = 500;      // 50%  
         return "L:" + legendaries.toString() + " E:" + epics.toString() + " R:" + rares.toString() + " C:" + commons.toString();
+    }
+
+    // Airdrop: check if address is on whitelist
+    get fun is_airdrop_winner(address: Address): Bool {
+        if (self.airdrop_list == null) {
+            return false;
+        }
+        let val: Bool? = self.airdrop_list.get(address);
+        if (val == null) {
+            return false;
+        }
+        return val!!;
+    }
+
+    get fun get_airdrop_count(): Int {
+        if (self.airdrop_list == null) {
+            return 0;
+        }
+        // Tact doesn't have map.length, return a query hint
+        return 0;
     }
 }

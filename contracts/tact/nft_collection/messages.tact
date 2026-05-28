@@ -13,3 +13,15 @@ message SetMintPrice {
     query_id: Int as uint64;
     new_price: Int as coins;
 }
+
+// Owner adds an address to the airdrop whitelist
+message AddAirdropWinner {
+    query_id: Int as uint64;
+    address: Address;
+}
+
+// Owner removes an address from the airdrop whitelist
+message RemoveAirdropWinner {
+    query_id: Int as uint64;
+    address: Address;
+}

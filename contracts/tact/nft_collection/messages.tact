@@ -14,6 +14,12 @@ message SetMintPrice {
     new_price: Int as coins;
 }
 
+// Owner sends this to mint an NFT for a giveaway winner (free, direct mint)
+message AirdropMint {
+    query_id: Int as uint64;
+    winner: Address;
+}
+
 // Owner adds an address to the airdrop whitelist
 message AddAirdropWinner {
     query_id: Int as uint64;

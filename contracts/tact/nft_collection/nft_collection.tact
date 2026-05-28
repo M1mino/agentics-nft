@@ -108,6 +108,17 @@ contract NftCollection {
         self.airdrop_list.del(msg.address);
     }
 
+    // Owner: direct airdrop mint for winners (free, they don't need TON)
+    receive(msg: AirdropMint) {
+        require(context().sender == self.owner_address, "only owner");
+        require(self.next_item_index < self.max_supply, "max supply reached");
+        require(self.mint_start_time > 0, "mint not started");
+
+        let storageFee: Int = self.minTonsForStorage - min(myBalance(), self.minTonsForStorage);
+        let netValue: Int = context().value - storageFee;
+        self.mint(msg.winner, netValue);
+    }
+
     // ===== Private Methods ===== //
     fun mint(sender: Address, msgValue: Int) {
         require(self.next_item_index >= 0, "non-sequential NFTs");

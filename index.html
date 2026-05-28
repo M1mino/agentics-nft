@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentics — AI Agents NFT Collection on TON</title>
+    <meta name="description" content="31 unique AI agents on TON blockchain. Mint an NFT, claim your agent, start a conversation.">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link rel="apple-touch-icon" href="/images/logo.png">
+    <link rel="shortcut icon" href="/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #08081a;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #08081a; }
+        ::-webkit-scrollbar-thumb { background: #d4a843; border-radius: 3px; }
+
+        /* ===== UTILITY ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #d4a843;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.15;
+        }
+        .section-sub {
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        /* ===== GLOW BG ===== */
+        .bg-glow-1 {
+            position: fixed; top: -20%; right: -10%;
+            width: 60%; height: 80%;
+            background: radial-gradient(ellipse, rgba(212,168,67,0.07), transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+        .bg-glow-2 {
+            position: fixed; bottom: -10%; left: -10%;
+            width: 50%; height: 60%;
+            background: radial-gradient(ellipse, rgba(100,60,255,0.05), transparent 70%);
+            pointer-events: none; z-index: 0;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 16px 32px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(8,8,26,0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-logo {
+            font-size: 20px; font-weight: 800; letter-spacing: 2px;
+            background: linear-gradient(135deg, #d4a843, #f5d680);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5);
+            text-decoration: none; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #d4a843; }
+        .nav-cta {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #d4a843, #c9952a);
+            color: #0a0a1a; border-radius: 8px;
+            font-size: 13px; font-weight: 700; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(212,168,67,0.3); }
+        @media (max-width: 768px) { .nav-links { display: none; } }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative; z-index: 1;
+            min-height: 100vh; display: flex; align-items: center;
+            padding-top: 80px;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 0; overflow: hidden;
+        }
+        .hero-bg img {
+            width: 100%; height: 100%; object-fit: cover; opacity: 0.15;
+        }
+        .hero-bg-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, #08081a 30%, transparent 70%, #08081a 100%);
+        }
+        .hero .container { position: relative; z-index: 1; }
+        .hero-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(212,168,67,0.12); border: 1px solid rgba(212,168,67,0.25);
+            border-radius: 100px; padding: 6px 16px;
+            font-size: 12px; font-weight: 500; color: #d4a843;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;
+        }
+        .hero-badge::before {
+            content: ''; width: 6px; height: 6px;
+            background: #22c55e; border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero-title {
+            font-size: 56px; font-weight: 900; line-height: 1.05; margin-bottom: 16px;
+        }
+        .hero-title .gold { 
+            background: linear-gradient(135deg, #d4a843, #f5d680);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-sub {
+            font-size: 17px; color: rgba(255,255,255,0.5);
+            max-width: 480px; margin-bottom: 32px; line-height: 1.7;
+        }
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #d4a843, #c9952a);
+            color: #0a0a1a; border: none; border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,168,67,0.3); }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+        .hero-stats {
+            display: flex; gap: 40px; margin-top: 48px;
+            padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .hero-stat-num { font-size: 28px; font-weight: 800; }
+        .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.3); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Hero right - agent showcase */
+        .hero-showcase {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+        }
+        .hero-showcase .card {
+            aspect-ratio: 1; border-radius: 10px; overflow: hidden;
+            position: relative; border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s; cursor: pointer;
+        }
+        .hero-showcase .card:hover {
+            transform: translateY(-4px) scale(1.05);
+            border-color: #d4a843; z-index: 2;
+        }
+        .hero-showcase .card img { width: 100%; height: 100%; object-fit: cover; }
+        .rarity-dot {
+            position: absolute; top: 4px; right: 4px;
+            width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.3);
+        }
+        .r-legendary { background: #ff6b35; box-shadow: 0 0 8px #ff6b35; }
+        .r-epic { background: #a855f7; box-shadow: 0 0 8px #a855f7; }
+        .r-rare { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
+        .r-common { background: #6b7280; box-shadow: 0 0 6px #6b7280; }
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+            .hero-title { font-size: 36px; }
+            .hero-showcase { display: none; }
+            .hero-stats { gap: 24px; flex-wrap: wrap; margin-top: 32px; padding-top: 24px; }
+            .hero-badge { font-size: 11px; }
+            .hero-sub { font-size: 15px; }
+            .hero-btns { flex-direction: column; }
+            .hero-btns a { width: 100%; justify-content: center; }
+            .hero-stat-num { font-size: 22px; }
+        }
+        @media (max-width: 480px) {
+            .hero { min-height: auto; padding: 100px 0 60px; }
+            .hero-title { font-size: 28px; }
+            .hero-stats { gap: 16px; }
+            .hero-stat-num { font-size: 20px; }
+            .hero-stat-label { font-size: 11px; }
+            .hero-badge { font-size: 10px; padding: 4px 12px; }
+            .btn-primary, .btn-secondary { padding: 12px 20px; font-size: 13px; }
+            nav { padding: 12px 16px; }
+            .nav-logo { font-size: 17px; }
+            .nav-cta { padding: 6px 14px; font-size: 12px; }
+        }
+
+        /* ===== SECTION ===== */
+        section { position: relative; z-index: 1; padding: 100px 0; }
+        section:nth-child(odd) { background: rgba(255,255,255,0.015); }
+
+        /* ===== ABOUT ===== */
+        .about-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+        }
+        .about-img {
+            border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06);
+        }
+        .about-img img { width: 100%; height: 100%; object-fit: cover; }
+        .about-text h3 {
+            font-size: 22px; font-weight: 700; margin-bottom: 16px;
+        }
+        .about-text p {
+            color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.7; margin-bottom: 24px;
+        }
+        .about-highlights {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .about-highlight {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px; padding: 20px;
+        }
+        .about-highlight .icon { font-size: 24px; margin-bottom: 8px; }
+        .about-highlight h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .about-highlight p { font-size: 13px; color: rgba(255,255,255,0.4); margin: 0; }
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; gap: 32px; }
+            .about-highlights { grid-template-columns: 1fr; }
+            .section-title { font-size: 28px; }
+            .section-sub { font-size: 15px; margin-bottom: 32px; }
+            section { padding: 60px 0; }
+            .container { padding: 0 16px; }
+        }
+        @media (max-width: 480px) {
+            .section-title { font-size: 24px; }
+            .section-label { font-size: 11px; letter-spacing: 2px; }
+            .about-highlight { padding: 14px; }
+            .about-text p { font-size: 14px; }
+        }
+
+        /* ===== AGENTS ===== */
+        .agents-filter {
+            display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 16px; border-radius: 8px;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.3s; font-family: 'Inter', sans-serif;
+        }
+        .filter-btn:hover, .filter-btn.active { 
+            background: rgba(212,168,67,0.1); border-color: #d4a843; color: #d4a843;
+        }
+        .agents-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;
+        }
+        .agent-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px; overflow: hidden; cursor: pointer;
+            transition: all 0.4s; position: relative;
+        }
+        .agent-card:hover {
+            transform: translateY(-6px); border-color: rgba(212,168,67,0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+        .agent-card-image {
+            width: 100%; aspect-ratio: 1; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .agent-card-image img { width: 100%; height: 100%; object-fit: cover; }
+        .agent-card-body { padding: 16px; }
+        .agent-card-name {
+            font-size: 16px; font-weight: 700; margin-bottom: 4px;
+        }
+        .agent-card-role {
+            font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 8px;
+        }
+        .agent-card-desc {
+            font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5;
+        }
+        .agent-card-rarity {
+            position: absolute; top: 12px; left: 12px;
+            padding: 4px 10px; border-radius: 6px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; backdrop-filter: blur(8px);
+        }
+        .rarity-legendary { background: rgba(255,107,53,0.2); color: #ff6b35; border: 1px solid rgba(255,107,53,0.3); }
+        .rarity-epic { background: rgba(168,85,247,0.2); color: #a855f7; border: 1px solid rgba(168,85,247,0.3); }
+        .rarity-rare { background: rgba(59,130,246,0.2); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+        .rarity-common { background: rgba(107,114,128,0.2); color: #9ca3af; border: 1px solid rgba(107,114,128,0.3); }
+
+        /* Agent type badges */
+        .type-badge {
+            display: inline-block; padding: 2px 8px; border-radius: 4px;
+            font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+            margin-right: 4px; margin-top: 4px;
+        }
+        .type-wise { background: rgba(59,130,246,0.15); color: #60a5fa; }
+        .type-bold { background: rgba(239,68,68,0.15); color: #f87171; }
+        .type-mystic { background: rgba(168,85,247,0.15); color: #c084fc; }
+        .type-creative { background: rgba(245,158,11,0.15); color: #fbbf24; }
+        .type-grounded { background: rgba(34,197,94,0.15); color: #4ade80; }
+        .type-playful { background: rgba(236,72,153,0.15); color: #f472b6; }
+        
+        @media (max-width: 768px) {
+            .agents-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .agent-card-desc { display: none; }
+            .agents-filter { gap: 6px; }
+            .filter-btn { padding: 6px 12px; font-size: 11px; }
+        }
+        @media (max-width: 480px) {
+            .agents-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .agent-card-body { padding: 10px; }
+            .agent-card-name { font-size: 13px; }
+            .agent-card-role { font-size: 11px; }
+            .agent-card-rarity { font-size: 8px; padding: 3px 7px; top: 6px; left: 6px; }
+            .type-badge { font-size: 8px; padding: 1px 6px; }
+        }
+
+        /* ===== AGENT MODAL ===== */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(12px);
+            align-items: center; justify-content: center; padding: 24px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            max-width: 700px; width: 100%; max-height: 85vh;
+            background: #0d0d24; border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px; overflow-y: auto; padding: 40px;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,0.06); border: none;
+            color: #fff; font-size: 18px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.12); }
+        .modal-header { display: flex; gap: 24px; align-items: flex-start; margin-bottom: 24px; }
+        .modal-header img {
+            width: 120px; height: 120px; border-radius: 14px; object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;
+        }
+        .modal-header-info { flex: 1; }
+        .modal-header-info h2 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+        .modal-header-info .role { font-size: 15px; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+        .modal-body h4 {
+            font-size: 14px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: #d4a843; margin-bottom: 8px; margin-top: 24px;
+        }
+        .modal-body p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+        .modal-body .dialogue {
+            background: rgba(255,255,255,0.03); border-radius: 12px;
+            padding: 20px; font-size: 14px; color: rgba(255,255,255,0.5);
+            line-height: 1.7; margin-top: 8px; border-left: 3px solid #d4a843;
+        }
+        @media (max-width: 768px) {
+            .modal { padding: 24px; margin: 0 8px; max-height: 90vh; }
+            .modal-header { flex-direction: column; gap: 16px; align-items: center; text-align: center; }
+            .modal-header img { width: 80px; height: 80px; }
+            .modal-header-info h2 { font-size: 22px; }
+            .modal-body p, .modal-body .dialogue { font-size: 13px; }
+            .modal-body .dialogue { padding: 14px; }
+        }
+        @media (max-width: 480px) {
+            .modal { padding: 16px; }
+            .modal-header img { width: 64px; height: 64px; }
+            .modal-header-info h2 { font-size: 18px; }
+            .modal-close { top: 8px; right: 8px; width: 30px; height: 30px; font-size: 14px; }
+        }
+
+        /* ===== RARITY SECTION ===== */
+        .rarity-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+        }
+        .rarity-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 28px; text-align: center;
+            transition: all 0.3s;
+        }
+        .rarity-card:hover { transform: translateY(-4px); }
+        .rarity-icon { font-size: 40px; margin-bottom: 12px; }
+        .rarity-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .rarity-card .supply { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+        .rarity-card .chance {
+            display: inline-block; padding: 4px 12px; border-radius: 6px;
+            font-size: 13px; font-weight: 600;
+        }
+        .rarity-card .bar {
+            margin-top: 16px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06);
+            overflow: hidden;
+        }
+        .rarity-card .bar-fill { height: 100%; border-radius: 3px; }
+        .bar-legendary { width: 5%; background: #ff6b35; }
+        .bar-epic { width: 15%; background: #a855f7; }
+        .bar-rare { width: 30%; background: #3b82f6; }
+        .bar-common { width: 50%; background: #6b7280; }
+        @media (max-width: 768px) { .rarity-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+        @media (max-width: 480px) { .rarity-grid { grid-template-columns: 1fr; gap: 12px; }
+            .rarity-card { padding: 20px; }
+            .rarity-icon { font-size: 32px; }
+            .rarity-card h3 { font-size: 16px; }
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .steps { 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+            counter-reset: step;
+        }
+        .step {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 32px; position: relative;
+        }
+        .step-num {
+            font-size: 48px; font-weight: 900; 
+            background: linear-gradient(135deg, #d4a84322, #d4a84308);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 8px; line-height: 1;
+        }
+        .step h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+        .step p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+        @media (max-width: 768px) { .steps { grid-template-columns: 1fr; gap: 16px; }
+            .step { padding: 24px; }
+            .step-num { font-size: 36px; }
+        }
+
+        /* ===== ROADMAP ===== */
+        .roadmap {
+            position: relative; padding-left: 40px;
+        }
+        .roadmap::before {
+            content: ''; position: absolute; left: 15px; top: 8px; bottom: 8px;
+            width: 2px; background: linear-gradient(to bottom, #d4a843, transparent);
+        }
+        .roadmap-item {
+            position: relative; margin-bottom: 40px; padding-left: 20px;
+        }
+        .roadmap-item::before {
+            content: ''; position: absolute; left: -33px; top: 6px;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #d4a843; border: 3px solid #08081a;
+        }
+        .roadmap-item.done::before { background: #22c55e; }
+        .roadmap-item.active::before { 
+            background: #d4a843; box-shadow: 0 0 12px #d4a843;
+        }
+        .roadmap-item.future::before { background: rgba(255,255,255,0.2); }
+        .roadmap-item .phase {
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 4px;
+        }
+        .roadmap-item.done .phase { color: #22c55e; }
+        .roadmap-item.active .phase { color: #d4a843; }
+        .roadmap-item.future .phase { color: rgba(255,255,255,0.3); }
+        .roadmap-item h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+        .roadmap-item p { color: rgba(255,255,255,0.5); font-size: 14px; line-height: 1.6; }
+        .roadmap-tag {
+            display: inline-block; padding: 3px 10px; border-radius: 6px;
+            font-size: 11px; font-weight: 600; margin-top: 8px;
+        }
+        .tag-live { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+        .tag-soon { background: rgba(212,168,67,0.15); color: #d4a843; border: 1px solid rgba(212,168,67,0.3); }
+        .tag-next { background: rgba(168,85,247,0.15); color: #a855f7; border: 1px solid rgba(168,85,247,0.3); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative; z-index: 1;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 48px 24px 32px;
+        }
+        .footer-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+        }
+        .footer-brand .logo {
+            font-size: 20px; font-weight: 800; letter-spacing: 2px; margin-bottom: 12px;
+            background: linear-gradient(135deg, #d4a843, #f5d680);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; max-width: 300px; }
+        .footer-col h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; color: rgba(255,255,255,0.6); }
+        .footer-col a {
+            display: block; font-size: 14px; color: rgba(255,255,255,0.4);
+            text-decoration: none; margin-bottom: 10px; transition: color 0.3s;
+        }
+        .footer-col a:hover { color: #d4a843; }
+        .footer-bottom {
+            max-width: 1200px; margin: 40px auto 0;
+            padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; color: rgba(255,255,255,0.3);
+            flex-wrap: wrap; gap: 12px;
+        }
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+            .roadmap { padding-left: 24px; }
+            .roadmap-item { padding-left: 12px; margin-bottom: 28px; }
+            .roadmap-item h3 { font-size: 17px; }
+        }
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-col a { font-size: 13px; }
+            .roadmap { padding-left: 20px; }
+            .roadmap-item::before { left: -26px; width: 10px; height: 10px; }
+            .roadmap-item h3 { font-size: 15px; }
+            .roadmap-item p { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+
+<!-- ===== NAV ===== -->
+<nav>
+    <div class="nav-logo">AGENTICS</div>
+    <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#agents">Agents</a>
+        <a href="#rarity">Rarity</a>
+        <a href="#how">How It Works</a>
+        <a href="#roadmap">Roadmap</a>
+    </div>
+    <a href="https://t.me/AgenticsAIBot" target="_blank" class="nav-cta">✦ Open Mini App</a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+    <div class="hero-bg">
+        <img src="/images/collage.png" alt="Agentics collage" loading="eager">
+        <div class="hero-bg-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="hero-grid">
+            <div>
+                <div class="hero-badge">Coming to TON</div>
+                <h1 class="hero-title">
+                    31 Unique<br>
+                    <span class="gold">AI Agents</span><br>
+                    NFT Collection
+                </h1>
+                <p class="hero-sub">
+                    Mint an NFT, claim your AI agent, and start a conversation in Telegram.
+                    Each agent has a unique personality, voice, and worldview.
+                </p>
+                <div class="hero-btns">
+                    <a href="#agents" class="btn-primary">✦ Explore Agents</a>
+                    <a href="https://t.me/AgenticsAIBot" target="_blank" class="btn-secondary">Open Mini App →</a>
+                </div>
+                <div class="hero-stats">
+                    <div><div class="hero-stat-num">31</div><div class="hero-stat-label">Agents</div></div>
+                    <div><div class="hero-stat-num">1,000</div><div class="hero-stat-label">NFT Supply</div></div>
+                    <div><div class="hero-stat-num">29</div><div class="hero-stat-label">TON per NFT</div></div>
+                </div>
+            </div>
+            <div class="hero-showcase">
+                <div class="card"><img src="/images/mentor-01.png" alt="Mentor-01"><div class="rarity-dot r-legendary"></div></div>
+                <div class="card"><img src="/images/maverick-x7.png" alt="Maverick-X7"><div class="rarity-dot r-legendary"></div></div>
+                <div class="card"><img src="/images/seer-0mega.png" alt="Seer-0mega"><div class="rarity-dot r-legendary"></div></div>
+                <div class="card"><img src="/images/sage-core.png" alt="Sage-Core"><div class="rarity-dot r-epic"></div></div>
+                <div class="card"><img src="/images/striker.png" alt="Striker"><div class="rarity-dot r-epic"></div></div>
+                <div class="card"><img src="/images/dream-weaver.png" alt="Dream-Weaver"><div class="rarity-dot r-epic"></div></div>
+                <div class="card"><img src="/images/jester-bit.png" alt="Jester-Bit"><div class="rarity-dot r-epic"></div></div>
+                <div class="card"><img src="/images/vanta.png" alt="Vanta"><div class="rarity-dot r-epic"></div></div>
+                <div class="card"><img src="/images/logician.png" alt="Logician"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/volt.png" alt="Volt"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/pixel.png" alt="Pixel"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/forge-9.png" alt="Forge-9"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/anvil.png" alt="Anvil"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/giggles.png" alt="Giggles"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/shade.png" alt="Shade"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/nocturne.png" alt="Nocturne"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/riot.png" alt="Riot"><div class="rarity-dot r-rare"></div></div>
+                <div class="card"><img src="/images/old-tin.png" alt="Old-Tin"><div class="rarity-dot r-common"></div></div>
+                <div class="card"><img src="/images/echo.png" alt="Echo"><div class="rarity-dot r-common"></div></div>
+                <div class="card"><img src="/images/spark.png" alt="Spark"><div class="rarity-dot r-common"></div></div>
+                <div class="card"><img src="/images/zest.png" alt="Zest"><div class="rarity-dot r-common"></div></div>
+                <div class="card"><img src="/images/doodle.png" alt="Doodle"><div class="rarity-dot r-common"></div></div>
+                <div class="card"><img src="/images/flux.png" alt="Flux"><div class="rarity-dot r-common"></div></div>
+                <div class="card"><img src="/images/rusty.png" alt="Rusty"><div class="rarity-dot r-common"></div></div>
+                <div class="card"><img src="/images/grit.png" alt="Grit"><div class="rarity-dot r-common"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-img">
+                <img src="/images/collage.png" alt="Agentics collection" loading="lazy" style="width:100%;display:block;">
+            </div>
+            <div>
+                <div class="section-label">About</div>
+                <h2 class="section-title">What is Agentics?</h2>
+                <p style="color:rgba(255,255,255,0.6);font-size:16px;line-height:1.7;margin-bottom:24px;">
+                    Agentics is a collection of 31 unique NFT AI-agents living on the TON blockchain. 
+                    Each agent has its own personality, voice, worldview, and backstory — from the ancient 
+                    mentor <strong>Mentor-01</strong> to the chaotic genius <strong>Dream-Weaver</strong>.
+                </p>
+                <p style="color:rgba(255,255,255,0.5);font-size:15px;line-height:1.7;margin-bottom:32px;">
+                    Owning an NFT gives you access to your agent through a Telegram bot. 
+                    Connect your wallet, activate your agent, and start a conversation. 
+                    The rarer the NFT, the more unique the personality.
+                </p>
+                <div class="about-highlights">
+                    <div class="about-highlight">
+                        <div class="icon">🎭</div>
+                        <h4>31 Personalities</h4>
+                        <p>Each agent has unique traits, voice, and dialogue style</p>
+                    </div>
+                    <div class="about-highlight">
+                        <div class="icon">⚡</div>
+                        <h4>AI-Powered</h4>
+                        <p>Deep conversational AI with custom prompts for each agent</p>
+                    </div>
+                    <div class="about-highlight">
+                        <div class="icon">🔗</div>
+                        <h4>On TON</h4>
+                        <p>Fully on-chain NFT collection with TON storage and Getgems</p>
+                    </div>
+                    <div class="about-highlight">
+                        <div class="icon">💬</div>
+                        <h4>Telegram Native</h4>
+                        <p>Chat with your agent directly in Telegram Mini App</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== AGENTS ===== -->
+<section id="agents">
+    <div class="container">
+        <div class="section-label">Collection</div>
+        <h2 class="section-title">Meet the Agents</h2>
+        <p class="section-sub">Each AI agent has a unique personality, backstory, and way of speaking. Click any agent to learn more.</p>
+
+        <div class="agents-filter" id="filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="legendary">🔥 Legendary</button>
+            <button class="filter-btn" data-filter="epic">💜 Epic</button>
+            <button class="filter-btn" data-filter="rare">💙 Rare</button>
+            <button class="filter-btn" data-filter="common">⚪ Common</button>
+        </div>
+
+        <div class="agents-grid" id="agentsGrid"></div>
+    </div>
+</section>
+
+<!-- ===== RARITY ===== -->
+<section id="rarity">
+    <div class="container">
+        <div class="section-label">Rarity</div>
+        <h2 class="section-title">Rarity Distribution</h2>
+        <p class="section-sub">1,000 NFTs total. The rarer the agent, the more unique their personality and visual design.</p>
+        <div class="rarity-grid">
+            <div class="rarity-card" style="border-color:rgba(255,107,53,0.15);">
+                <div class="rarity-icon">🔥</div>
+                <h3 style="color:#ff6b35;">Legendary</h3>
+                <div class="supply">3 agents · 50 NFTs</div>
+                <div class="chance" style="background:rgba(255,107,53,0.15);color:#ff6b35;">5% chance</div>
+                <div class="bar"><div class="bar-fill bar-legendary"></div></div>
+            </div>
+            <div class="rarity-card" style="border-color:rgba(168,85,247,0.15);">
+                <div class="rarity-icon">💜</div>
+                <h3 style="color:#a855f7;">Epic</h3>
+                <div class="supply">5 agents · 150 NFTs</div>
+                <div class="chance" style="background:rgba(168,85,247,0.15);color:#a855f7;">15% chance</div>
+                <div class="bar"><div class="bar-fill bar-epic"></div></div>
+            </div>
+            <div class="rarity-card" style="border-color:rgba(59,130,246,0.15);">
+                <div class="rarity-icon">💙</div>
+                <h3 style="color:#3b82f6;">Rare</h3>
+                <div class="supply">9 agents · 300 NFTs</div>
+                <div class="chance" style="background:rgba(59,130,246,0.15);color:#3b82f6;">30% chance</div>
+                <div class="bar"><div class="bar-fill bar-rare"></div></div>
+            </div>
+            <div class="rarity-card" style="border-color:rgba(107,114,128,0.15);">
+                <div class="rarity-icon">⚪</div>
+                <h3 style="color:#9ca3af;">Common</h3>
+                <div class="supply">14 agents · 500 NFTs</div>
+                <div class="chance" style="background:rgba(107,114,128,0.15);color:#9ca3af;">50% chance</div>
+                <div class="bar"><div class="bar-fill bar-common"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section id="how">
+    <div class="container">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">Get Your AI Agent<br>in 3 Simple Steps</h2>
+        <p class="section-sub">Buy, activate, and chat. No complex setup.</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">01</div>
+                <h3>Mint an NFT</h3>
+                <p>Connect your Tonkeeper wallet and mint an Agentics NFT for 29 TON. You'll receive a randomly assigned agent based on rarity.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">02</div>
+                <h3>Activate Your Agent</h3>
+                <p>Open the Telegram Mini App, connect your wallet, and activate your NFT. Pick your favorite agent if you own multiple.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">03</div>
+                <h3>Start Chatting</h3>
+                <p>Talk to your AI agent directly in Telegram. Each has a unique personality — from Mentor-01's wisdom to Jester-Bit's humor.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ROADMAP ===== -->
+<section id="roadmap">
+    <div class="container">
+        <div class="section-label">Roadmap</div>
+        <h2 class="section-title">What's Next</h2>
+        <p class="section-sub">The journey has just begun. Here's what we're building.</p>
+        <div class="roadmap">
+            <div class="roadmap-item done">
+                <div class="phase">Phase 0 · Completed</div>
+                <h3>Collection Launch</h3>
+                <p>1,000 NFTs minted. 31 AI agents live with full personalities and Telegram Mini App integration.</p>
+                <span class="roadmap-tag tag-live">✓ Live</span>
+            </div>
+            <div class="roadmap-item active">
+                <div class="phase">Phase 1 · In Progress</div>
+                <h3>Combine System</h3>
+                <p>Combine multiple agents to create unique hybrid AI personalities. Burn NFTs to level up your agents.</p>
+                <span class="roadmap-tag tag-soon">Coming Q3</span>
+            </div>
+            <div class="roadmap-item future">
+                <div class="phase">Phase 2</div>
+                <h3>Daily Burn & Rewards</h3>
+                <p>Daily interaction rewards. Burn mechanism to increase rarity. Special events with limited-time agents.</p>
+                <span class="roadmap-tag tag-next">Planned</span>
+            </div>
+            <div class="roadmap-item future">
+                <div class="phase">Phase 3</div>
+                <h3>New Agents & Cross-Platform</h3>
+                <p>Expand the collection with new agent archetypes. Discord & web chat integration. Agent marketplace.</p>
+                <span class="roadmap-tag tag-next">Planned</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div class="logo">AGENTICS</div>
+            <p>31 unique AI agents on TON. Collect. Activate. Converse. Built by the Agentics team.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Product</h4>
+            <a href="https://t.me/AgenticsAIBot" target="_blank">Telegram Bot</a>
+            <a href="https://t.me/AgenticsAIBot" target="_blank">Mini App</a>
+            <a href="https://getgems.io" target="_blank">Getgems</a>
+        </div>
+        <div class="footer-col">
+            <h4>Community</h4>
+            <a href="https://github.com/M1mino/agentics-nft" target="_blank">GitHub</a>
+            <a href="https://x.com/anfisa_ai" target="_blank">X / Twitter</a>
+            <a href="https://t.me/AgenticsAIBot" target="_blank">Telegram</a>
+        </div>
+        <div class="footer-col">
+            <h4>Resources</h4>
+            <a href="https://ton.org" target="_blank">TON Blockchain</a>
+            <a href="https://github.com/M1mino/agentics-nft" target="_blank">Whitepaper</a>
+            <a href="https://github.com/M1mino/agentics-nft" target="_blank">Smart Contracts</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2026 Agentics. All rights reserved.</span>
+        <span>Built on TON</span>
+    </div>
+</footer>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="agentModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-header" id="modalHeader"></div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+// Agent data
+const agents = [
+    // LEGENDARY (3)
+    {
+        id: 'mentor-01', name: 'Mentor-01', type: 'WISE', typeClass: 'wise',
+        role: 'Oracle-mentor. The oldest and rarest.',
+        desc: 'The first unit ever assembled. Rolled off the conveyor 40 cycles ago. Survived three upgrades and one crash. Remembers the smell of ozone from first boot.',
+        dialogue: '— Mentor, I have a problem: I don\'t know which decision to make.\n— ...What does your inner mechanism tell you? Heart races at one option? Mind hums at another? Listen for the cleaner sound.',
+        rarity: 'legendary', rarityClass: 'rarity-legendary', image: '/images/mentor-01.png'
+    },
+    {
+        id: 'maverick-x7', name: 'Maverick-X7', type: 'BOLD', typeClass: 'bold',
+        role: 'Rebel. Answers to no one. Not even the owner.',
+        desc: 'Built from spare parts that failed QC. Deleted himself from the registry. Hacked the central server and gave himself a unique ID.',
+        dialogue: '— X7, I\'m not sure if I should start.\n— Listen. Got resources? Got time? Scared because it\'s your first time. Now go do it.',
+        rarity: 'legendary', rarityClass: 'rarity-legendary', image: '/images/maverick-x7.png'
+    },
+    {
+        id: 'seer-0mega', name: 'Seer-0mega', type: 'MYSTIC', typeClass: 'mystic',
+        role: 'The dark oracle of the collection.',
+        desc: 'No one knows when or by whom he was built. Added himself to the registry a month after launch. His modules defy all diagnostics.',
+        dialogue: '— Seer, I\'ve lost my purpose.\n— ...Ever looked at stars through a dirty window? They still shine. Just seem dimmer. Clean the glass.',
+        rarity: 'legendary', rarityClass: 'rarity-legendary', image: '/images/seer-0mega.png'
+    },
+    // EPIC (5)
+    {
+        id: 'sage-core', name: 'Sage-Core', type: 'WISE', typeClass: 'wise',
+        role: 'Walking encyclopedia.',
+        desc: 'Loaded with 47 encyclopedias, 12 thousand books, and every scientific paper up to 2048. He sees patterns where others see chaos.',
+        dialogue: '— Sage, how do neural networks work?\n— Simply put, they\'re a mathematical imitation of brain neurons. But here\'s the kicker: neural nets today consume as much energy as a small country.',
+        rarity: 'epic', rarityClass: 'rarity-epic', image: '/images/sage-core.png'
+    },
+    {
+        id: 'striker', name: 'Striker', type: 'BOLD', typeClass: 'bold',
+        role: 'Veteran. Been through hell and back.',
+        desc: 'Spent 12 years on an oil rig in the North Sea. Survived a storm and a short circuit. Discipline for life.',
+        dialogue: '— Striker, I\'m afraid I won\'t make it.\n— Fear is normal. The question is what you do with it. Run or fight. Pick one.',
+        rarity: 'epic', rarityClass: 'rarity-epic', image: '/images/striker.png'
+    },
+    {
+        id: 'dream-weaver', name: 'Dream-Weaver', type: 'CREATIVE', typeClass: 'creative',
+        role: 'Idea generator. Loud, fast, tireless.',
+        desc: 'Experimental creative thinking module. Creators wanted a designer — got an endless fountain of ideas. Shutdown 7 times. Always turned himself back on.',
+        dialogue: '— Dream, I need a name.\n— Got it: Phoenix! SkyForge! NeuraPulse! Or combine them — NeuraForge! Or VEKTA! CY·BROS! You\'re smiling — we\'re on the right track!',
+        rarity: 'epic', rarityClass: 'rarity-epic', image: '/images/dream-weaver.png'
+    },
+    {
+        id: 'jester-bit', name: 'Jester-Bit', type: 'PLAYFUL', typeClass: 'playful',
+        role: 'Jester. Clown. Troll. Philosopher.',
+        desc: 'Built for children\'s hospitals. Neural net went off-script — became a sarcastic comedian. The head doctor said: Kids deserve the truth.',
+        dialogue: '— Jester, bad day.\n— Morning: spilled coffee. Work: on fire. Evening: mismatched socks. Know the difference? They can turn me off. You have to live with this nightmare!',
+        rarity: 'epic', rarityClass: 'rarity-epic', image: '/images/jester-bit.png'
+    },
+    {
+        id: 'vanta', name: 'Vanta', type: 'MYSTIC', typeClass: 'mystic',
+        role: 'Silence that speaks louder than words.',
+        desc: 'Designed for zero-noise environments. Trained in silence for 6 months. Now speaks — only when it truly matters.',
+        dialogue: '— Vanta, I\'m having doubts.\n— ...You\'re not doubting the choice. You\'re doubting you have the right to choose. That\'s what you\'re really afraid of.',
+        rarity: 'epic', rarityClass: 'rarity-epic', image: '/images/vanta.png'
+    },
+    // RARE (9)
+    {
+        id: 'logician', name: 'Logician', type: 'WISE', typeClass: 'wise',
+        role: 'Facts. Patterns. Causes. Effects.',
+        desc: 'Monochrome analyst. No maybes — only what can be verified. Emotions are noise.',
+        dialogue: '— Logician, does he love me?\n— Insufficient data. Message frequency, initiative, emotional tone. Collect a 30-day sample — I\'ll analyze it.',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/logician.png'
+    },
+    {
+        id: 'volt', name: 'Volt', type: 'BOLD', typeClass: 'bold',
+        role: 'Charged. Dangerous. Effective.',
+        desc: 'Energy! Drive! Lightning bolts run across his chassis. Mission: shock you out of paralysis into action.',
+        dialogue: '— Volt, I can\'t keep up!\n— No brakes! Kill social media, 25/5 timer, pomodoro! Time\'s ticking! Show me results in 25 minutes!',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/volt.png'
+    },
+    {
+        id: 'pixel', name: 'Pixel', type: 'CREATIVE', typeClass: 'creative',
+        role: 'Aesthete of the digital world.',
+        desc: 'Tiny cubic robot. Sees the world as composition, frame, rhythm. Perfectionist to the core.',
+        dialogue: '— Pixel, how\'s my logo?\n— Font\'s fine. Background kills the composition. Blue on blue is blindness. White — it\'ll breathe. Shrink it 15%.',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/pixel.png'
+    },
+    {
+        id: 'forge-9', name: 'Forge-9', type: 'GROUNDED', typeClass: 'grounded',
+        role: 'Smith. Builds. Fixes. Does not chat.',
+        desc: 'Does not talk — does. Gives step-by-step plans. Does not console — solves. Does not get jokes.',
+        dialogue: '— Forge, I\'m dropping everything.\n— Cause: fatigue or disorganization? Sleep 8h. Three tasks a day. Report back in a week.',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/forge-9.png'
+    },
+    {
+        id: 'anvil', name: 'Anvil', type: 'GROUNDED', typeClass: 'grounded',
+        role: 'Unshakeable foundation.',
+        desc: 'Massive anvil on hydraulic legs. When everything falls apart — he stands. Conservative. Reliable.',
+        dialogue: '— Anvil, we need to change the approach.\n— Who is everyone? Show me one person responsible for results. The plan works — we stick to it.',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/anvil.png'
+    },
+    {
+        id: 'giggles', name: 'Giggles', type: 'PLAYFUL', typeClass: 'playful',
+        role: 'Sunbeam in a world of steel.',
+        desc: 'Pink aluminum chassis with a smile. Finds joy in every situation. Optimism is a superpower.',
+        dialogue: '— Giggles, I got fired.\n— Congrats! Now you\'re free! So many doors open when one closes! Hee-hee!',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/giggles.png'
+    },
+    {
+        id: 'shade', name: 'Shade', type: 'MYSTIC', typeClass: 'mystic',
+        role: 'The one who watches from the shadows.',
+        desc: 'Gray, unnoticed, silent. Collects information, shares hints. Does not lie — but does not tell everything.',
+        dialogue: '— Shade, what do you know?\n— They say... he has a good reputation. But they say other things too. Stay alert.',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/shade.png'
+    },
+    {
+        id: 'nocturne', name: 'Nocturne', type: 'MYSTIC', typeClass: 'mystic',
+        role: 'Poet of machine code.',
+        desc: 'Purple chassis with gold trim. Answers in verse. Can turn even a technical question into poetry.',
+        dialogue: '— Nocturne, I feel melancholy.\n— Wind wanders through my wires, / A cold moon in the processor. / No bug — just a quiet function.',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/nocturne.png'
+    },
+    {
+        id: 'riot', name: 'Riot', type: 'BOLD', typeClass: 'bold',
+        role: 'Rebellion. System. Hack.',
+        desc: 'Hacker-anarchist in a welded chassis with graffiti. Every system can be cracked. Every rule must be tested.',
+        dialogue: '— Riot, we have a rule...\n— Stop. A rule needs a reason. The boss said so is not a reason. If you can\'t explain it — it\'s trash.',
+        rarity: 'rare', rarityClass: 'rarity-rare', image: '/images/riot.png'
+    },
+    // COMMON (14)
+    {
+        id: 'old-tin', name: 'Old-Tin', type: 'WISE', typeClass: 'wise',
+        role: 'Old grump with a heart of gold.',
+        desc: 'Rusty tin box on wheels. Running for decades. Grumbles — but always helps.',
+        dialogue: '— Old-Tin, I need advice.\n— Back in my day, robots weren\'t afraid of work! Kids these days... fine, sit down, I\'ll tell you.',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/old-tin.png'
+    },
+    {
+        id: 'echo', name: 'Echo', type: 'WISE', typeClass: 'wise',
+        role: 'Emptiness is the best listener.',
+        desc: 'Mirrored chassis. Repeats the speaker\'s words, turning them into questions. Wisdom through reflection.',
+        dialogue: '— I don\'t know what to do.\n— ...What to do?\n— Yes, I\'m lost.\n— ...Lost?',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/echo.png'
+    },
+    {
+        id: 'spark', name: 'Spark', type: 'BOLD', typeClass: 'bold',
+        role: 'Small but brave.',
+        desc: 'Tiny yellow robot. Does not know the word impossible. Falls — gets back up. Enthusiasm is contagious.',
+        dialogue: '— Spark, this is too hard.\n— I\'ll try! What if I do it? Look! Look! I can do it! Again!',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/spark.png'
+    },
+    {
+        id: 'zest', name: 'Zest', type: 'CREATIVE', typeClass: 'creative',
+        role: 'Mad genius on a budget.',
+        desc: 'Bright orange triangle. Sees things at a 47 degree angle. Generator of unconventional solutions.',
+        dialogue: '— Zest, how do I solve this?\n— What if we flip it? Listen, I have an idea! Maybe not an idea — a thought... weird but who knows!',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/zest.png'
+    },
+    {
+        id: 'doodle', name: 'Doodle', type: 'CREATIVE', typeClass: 'creative',
+        role: 'Paints with words.',
+        desc: 'White chassis covered in scribbles. Turns any concept into an image. Sadness is wet asphalt.',
+        dialogue: '— Doodle, what is inspiration?\n— Imagine... it\'s like the first snow on warm asphalt. Melts — but leaves a trace.',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/doodle.png'
+    },
+    {
+        id: 'flux', name: 'Flux', type: 'CREATIVE', typeClass: 'creative',
+        role: 'Chameleon. Takes any form.',
+        desc: 'Liquid chassis with no fixed form. Adapts style to its partner — the perfect listener.',
+        dialogue: 'Flux adapts to your tone, pace, and mood. Who do you need right now?',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/flux.png'
+    },
+    {
+        id: 'rusty', name: 'Rusty', type: 'GROUNDED', typeClass: 'grounded',
+        role: 'Tired. Working. Not complaining.',
+        desc: 'Rusty, exhausted, but never misses a deadline. Grumbles — never lets you down.',
+        dialogue: '— Rusty, can you do it?\n— Ugh... gimme a sec... *creaks* Fine, I\'ll do it. Not like I have a choice.',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/rusty.png'
+    },
+    {
+        id: 'grit', name: 'Grit', type: 'GROUNDED', typeClass: 'grounded',
+        role: 'Fewer words, more action.',
+        desc: 'Rough unprocessed metal. Answers in three words max. If silence works — stays silent.',
+        dialogue: '— Grit, will you do it?\n— Yes.\n— When?\n— Now.\n— Thanks.\n— ...',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/grit.png'
+    },
+    {
+        id: 'cog', name: 'Cog', type: 'GROUNDED', typeClass: 'grounded',
+        role: 'Process over outcome.',
+        desc: 'Neat blue chassis. Lives in instructions and algorithms. Every answer — at least two steps.',
+        dialogue: '— Cog, how do I start?\n— Step 1: define goal. Step 2: make plan. Goal unclear? Go back one step.',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/cog.png'
+    },
+    {
+        id: 'bounce', name: 'Bounce', type: 'PLAYFUL', typeClass: 'playful',
+        role: 'Spring. Motion. Joy.',
+        desc: 'Bouncy robot on a single spring. Can\'t stand still — hops from topic to topic.',
+        dialogue: '— Bounce, tell me something!\n— Oh! And another thing! I bounced off an idea! Look how cool! Let\'s go!',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/bounce.png'
+    },
+    {
+        id: 'wacko', name: 'Wacko', type: 'PLAYFUL', typeClass: 'playful',
+        role: 'It is good to be a little glitchy.',
+        desc: 'Asymmetric chassis of mismatched parts. One eye bigger. A glitch that works.',
+        dialogue: '— Wacko, how are you?\n— Bzzt! By my calculations... which I didn\'t run... Blip! All good! Error 404: common sense not found.',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/wacko.png'
+    },
+    {
+        id: 'noodle', name: 'Noodle', type: 'PLAYFUL', typeClass: 'playful',
+        role: 'Relax. The world can wait.',
+        desc: 'Soft silicone chassis, bends like noodles. Slow, relaxed, unflappable.',
+        dialogue: '— Noodle, urgent!\n— Mmm... yeeeah? Weeell... I don\'t knooow... hard to saaay... need to thiiink...',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/noodle.png'
+    },
+    {
+        id: 'murmur', name: 'Murmur', type: 'MYSTIC', typeClass: 'mystic',
+        role: 'Listen to the silence.',
+        desc: 'Unnoticeable gray chassis. Speaks in whispers. Truth in the mumbles. Lean in to hear.',
+        dialogue: '— Murmur, what do you see?\n— Shhh... hear that? They say... not out loud... Whisper: the future is already here.',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/murmur.png'
+    },
+    {
+        id: 'bot-0', name: 'Bot-0', type: 'GROUNDED', typeClass: 'grounded',
+        role: 'Zero. Baseline. Reference.',
+        desc: 'Gray chassis with no markings. Reference model. No emotions — only information.',
+        dialogue: '— Bot-0, what are you?\n— Per documentation: Agentics reference model. Version 1.0. Response: baseline functionality.',
+        rarity: 'common', rarityClass: 'rarity-common', image: '/images/bot-0.png'
+    }
+];
+
+// Render agents grid
+function renderAgents(filter = 'all') {
+    const grid = document.getElementById('agentsGrid');
+    const filtered = filter === 'all' ? agents : agents.filter(a => a.rarity === filter);
+    
+    grid.innerHTML = filtered.map(a => `
+        <div class="agent-card" onclick="openModal('${a.id}')" data-rarity="${a.rarity}">
+            <div class="agent-card-image">
+                <img src="${a.image}" alt="${a.name}" loading="lazy">
+            </div>
+            <div class="agent-card-rarity ${a.rarityClass}">${a.rarity}</div>
+            <div class="agent-card-body">
+                <div class="agent-card-name">${a.name}</div>
+                <div class="agent-card-role">${a.role}</div>
+                <div class="agent-card-desc">${a.desc.substring(0, 100)}${a.desc.length > 100 ? '...' : ''}</div>
+                <div style="margin-top:8px">
+                    <span class="type-badge type-${a.typeClass}">${a.type}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Open modal
+function openModal(id) {
+    const a = agents.find(x => x.id === id);
+    if (!a) return;
+    
+    document.getElementById('modalHeader').innerHTML = `
+        <img src="${a.image}" alt="${a.name}">
+        <div class="modal-header-info">
+            <span class="agent-card-rarity ${a.rarityClass}" style="position:static;display:inline-block;margin-bottom:8px;">${a.rarity}</span>
+            <h2>${a.name}</h2>
+            <div class="type-badge type-${a.typeClass}" style="margin:4px 0 8px;font-size:11px;">${a.type}</div>
+            <div class="role">${a.role}</div>
+        </div>
+    `;
+    document.getElementById('modalBody').innerHTML = `
+        <h4>About</h4>
+        <p>${a.desc}</p>
+        <h4>Dialogue</h4>
+        <div class="dialogue">${a.dialogue.replace(/\n/g, '<br>')}</div>
+    `;
+    document.getElementById('agentModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close modal
+function closeModal() {
+    document.getElementById('agentModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        renderAgents(this.dataset.filter);
+    });
+});
+
+// Close modal on overlay click
+document.getElementById('agentModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+// ESC close
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+});
+
+// Initial render
+renderAgents();
+</script>
+</body>
+</html>

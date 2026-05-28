@@ -6,7 +6,7 @@ contract NftCollection {
     
     const minTonsForStorage: Int = ton("0.03");
     const gasConsumption: Int = ton("0.03");
-    const defaultMintPrice: Int = ton("29");   // 29 TON
+    const defaultMintPrice: Int = ton("29");   // 29 TON — цена NFT
     const mintDuration: Int = 14 * 86400;       // 14 days in seconds
 
     next_item_index: Int as uint32 = 0;
@@ -32,43 +32,25 @@ contract NftCollection {
         let ctx: Context = context();
         let msgValue: Int = ctx.value;
 
-        // Check if sender is on airdrop whitelist — skip price check
-        let isAirdropWinner: Bool = false;
-        if (self.airdrop_list != null) {
-            let val: Bool? = self.airdrop_list.get(ctx.sender);
-            if (val != null and val!!) {
-                isAirdropWinner = true;
-            }
-        }
-
-        if (isAirdropWinner) {
-            // Airdrop: just need enough to cover storage + gas
-            require(msgValue >= self.minTonsForStorage + self.gasConsumption, "insufficient gas for airdrop mint");
-        } else {
-            // Regular mint: full price check
-            require(msgValue >= self.mint_price, "insufficient TON for mint");
-        }
+        // Minimum: 29 TON (price) + 0.03 (gas) + 0.03 (storage reserve) + 0.03 (deploy) = 29.09 TON
+        let minRequired: Int = self.mint_price + self.gasConsumption + self.minTonsForStorage + ton("0.03");
         
+        require(msgValue >= minRequired, "insufficient TON — need at least 29.09 TON");
         require(self.next_item_index < self.max_supply, "max supply reached");
         require(self.mint_start_time > 0, "mint not started");
         require(now() - self.mint_start_time <= self.mintDuration, "mint period ended");
 
-        let tonBalanceBeforeMsg: Int = myBalance() - msgValue;
-        let storageFee: Int = self.minTonsForStorage - min(tonBalanceBeforeMsg, self.minTonsForStorage);
-        msgValue = msgValue - (storageFee + self.gasConsumption);
+        // 29 TON → owner (mint price)
+        send(SendParameters{
+            to: self.owner_address,
+            value: self.mint_price,
+            mode: SendPayGasSeparately,
+            body: null
+        });
 
-        // Send excess back to sender
-        let excess: Int = msgValue - ton("0.1"); // reserve for NFT deploy
-        if (excess > 0) {
-            send(SendParameters{
-                to: ctx.sender,
-                value: 0,
-                mode: SendPayGasSeparately + SendIgnoreErrors,
-                body: Excesses{ query_id: 0 }.toCell()
-            });
-        }
-
-        self.mint(ctx.sender, msgValue);
+        // Remaining (after price deduction) → deploy NFT + excess back to buyer
+        let deployValue: Int = msgValue - self.mint_price;
+        self.mint(ctx.sender, deployValue);
     }
 
     // Admin: start mint — sets the 14-day window
@@ -84,7 +66,7 @@ contract NftCollection {
         self.mint_price = msg.new_price;
     }
 
-    // Admin: withdraw collected TON
+    // Admin: withdraw any accidental TON from collection (normally should be empty)
     receive("Withdraw") {
         require(context().sender == self.owner_address, "only owner");
         send(SendParameters{
@@ -108,19 +90,44 @@ contract NftCollection {
         self.airdrop_list.del(msg.address);
     }
 
-    // Owner: direct airdrop mint for winners (free, they don't need TON)
+    // Owner: direct airdrop mint for winners (free, no 29 TON price — owner pays deploy)
     receive(msg: AirdropMint) {
         require(context().sender == self.owner_address, "only owner");
         require(self.next_item_index < self.max_supply, "max supply reached");
         require(self.mint_start_time > 0, "mint not started");
 
-        let storageFee: Int = self.minTonsForStorage - min(myBalance(), self.minTonsForStorage);
-        let netValue: Int = context().value - storageFee;
-        self.mint(msg.winner, netValue);
+        // Random rarity
+        let r: Int = randomInt(1000);
+        let tier: Int;
+        if (r < 50) { tier = 3; }
+        elseif (r < 200) { tier = 2; }
+        elseif (r < 500) { tier = 1; }
+        else { tier = 0; }
+        self.rarity_map.set(self.next_item_index, RarityInfo{ tier: tier });
+
+        // Deploy NFT with whatever TON owner attached
+        let nft_init: StateInit = self.getNftItemInit(self.next_item_index);
+        send(SendParameters{
+            to: contractAddress(nft_init),
+            value: context().value,
+            bounce: false,
+            mode: SendIgnoreErrors,
+            body: Transfer {
+                query_id: 0,
+                new_owner: msg.winner,
+                response_destination: context().sender,  // excess back to owner
+                custom_payload: emptyCell(),
+                forward_amount: 0,
+                forward_payload: emptySlice()
+            }.toCell(),
+            code: nft_init.code,
+            data: nft_init.data
+        });
+        self.next_item_index = self.next_item_index + 1;
     }
 
     // ===== Private Methods ===== //
-    fun mint(sender: Address, msgValue: Int) {
+    fun mint(sender: Address, deployValue: Int) {
         require(self.next_item_index >= 0, "non-sequential NFTs");
         
         // Random rarity assignment: 5% Leg, 15% Epic, 30% Rare, 50% Common
@@ -140,13 +147,13 @@ contract NftCollection {
         let nft_init: StateInit = self.getNftItemInit(self.next_item_index);
         send(SendParameters{
                 to: contractAddress(nft_init), 
-                value: msgValue, 
+                value: deployValue, 
                 bounce: false,
                 mode: SendIgnoreErrors,
                 body: Transfer {
                     query_id: 0,
                     new_owner: sender,
-                    response_destination: self.owner_address,
+                    response_destination: sender,  // excess back to BUYER
                     custom_payload: emptyCell(),
                     forward_amount: 0,
                     forward_payload: emptySlice()
@@ -173,7 +180,7 @@ contract NftCollection {
         });        
     }
 
-    // ------------------ Get Function  ------------------ //
+    // ------------------ Get Functions ------------------ //
     get fun get_collection_data(): CollectionData {     
         let b: StringBuilder = beginString();
         let collectionDataString: String = self.collection_content.asSlice().asString();
@@ -277,7 +284,6 @@ contract NftCollection {
         if (self.airdrop_list == null) {
             return 0;
         }
-        // Tact doesn't have map.length, return a query hint
-        return 0;
+        return 0;  // Tact doesn't have map.length
     }
 }

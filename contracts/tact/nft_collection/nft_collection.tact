@@ -4,8 +4,6 @@ import "./../nft_item/nft_item";
 
 contract NftCollection {
     
-    const minTonsForStorage: Int = ton("0.03");
-    const gasConsumption: Int = ton("0.03");
     const defaultMintPrice: Int = ton("29");   // 29 TON — цена NFT
     const mintDuration: Int = 14 * 86400;       // 14 days in seconds
 
@@ -30,12 +28,8 @@ contract NftCollection {
 
     receive("Mint"){
         let ctx: Context = context();
-        let msgValue: Int = ctx.value;
 
-        // Minimum: 29 TON (price) + 0.03 (gas) + 0.03 (storage reserve) + 0.03 (deploy) = 29.09 TON
-        let minRequired: Int = self.mint_price + self.gasConsumption + self.minTonsForStorage + ton("0.03");
-        
-        require(msgValue >= minRequired, "insufficient TON — need at least 29.09 TON");
+        require(ctx.value >= self.mint_price, "insufficient TON for mint");
         require(self.next_item_index < self.max_supply, "max supply reached");
         require(self.mint_start_time > 0, "mint not started");
         require(now() - self.mint_start_time <= self.mintDuration, "mint period ended");
@@ -48,9 +42,8 @@ contract NftCollection {
             body: null
         });
 
-        // Remaining (after price deduction) → deploy NFT + excess back to buyer
-        let deployValue: Int = msgValue - self.mint_price;
-        self.mint(ctx.sender, deployValue);
+        // Remaining → deploy NFT (excess goes back to buyer via NFT contract)
+        self.mint(ctx.sender, ctx.value - self.mint_price);
     }
 
     // Admin: start mint — sets the 14-day window
